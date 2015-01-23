@@ -53,10 +53,27 @@ module.exports = function() {
 
 			app.use(passport.initialize());
 			app.use(passport.session());
+
+			app.use(function(req, res, next) {
+
+				/*
+				Object.prototype.__defineGetter__.apply(res.locals, ['account', function() {
+					return req.user;
+				}]);
+				*/
+
+				res.locals.account = req.user;
+				next();
+			});
+
 		});
 
 
+
 		this.run(function(router) {
+
+
+
 
 			router.post( config.baseRoute + '/login', function(req, res, next) {
 				Model.login(req.body.email, req.body.password)
@@ -66,7 +83,7 @@ module.exports = function() {
 						res.json(user);
 					});
 				}, function(err) {
-					res.json({
+					res.status(401).json({
 						error:{
 							message: err.message
 						}
@@ -94,7 +111,7 @@ module.exports = function() {
 						res.json(user);
 					});
 				}, function(err) {
-					res.json(err);
+					res.status(401).json(err);
 				});
 
 			});
