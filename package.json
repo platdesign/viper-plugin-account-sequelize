@@ -1,7 +1,7 @@
 {
   "name": "viper-plugin-account-sequelize",
   "description": "viper-plugin-account-sequelize",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "bcrypt": "^0.8.1",
     "extend": "^2.0.0",
