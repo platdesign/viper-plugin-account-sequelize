@@ -73,7 +73,18 @@ module.exports = function() {
 		this.run(function(router) {
 
 
-
+			router.get( config.baseRoute, function(req, res, next) {
+				if(req.isAuthenticated()) {
+					res.json({
+						id: req.user.id,
+						username: req.user.username
+					});
+				} else {
+					res.status(401).json({
+						message: 'Not authenticated'
+					});
+				}
+			});
 
 			router.post( config.baseRoute + '/login', function(req, res, next) {
 				Model.login(req.body.email, req.body.password)
